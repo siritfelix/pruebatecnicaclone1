@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class SuperHeroeServiceImple implements SuperHeroeService {
 
-    
     @Autowired
     private SuperHeroeRepository superHeroeRepository;
 
@@ -51,7 +50,6 @@ public class SuperHeroeServiceImple implements SuperHeroeService {
 
     @Override
     public List<SuperHeroe> ListarPorCoincidenciaTodos(String nombre) {
-        // TODO Auto-generated method stub
-        return null;
+        return superHeroeRepository.findByNombreContaining(nombre);
     }
 }
