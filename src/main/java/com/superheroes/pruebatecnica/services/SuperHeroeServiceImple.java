@@ -25,7 +25,7 @@ public class SuperHeroeServiceImple implements SuperHeroeService {
 
     @Override
     public Optional<SuperHeroe> BuscarPorId(Integer id) {
-        
+
         return superHeroeRepository.findById(id);
     }
 
@@ -43,7 +43,7 @@ public class SuperHeroeServiceImple implements SuperHeroeService {
     public Boolean Eliminar(Integer id) {
         Optional<SuperHeroe> superHeroe = BuscarPorId(id);
         if (superHeroe.isPresent()) {
-            superHeroeRepository.delete(superHeroe.get());
+            superHeroeRepository.deleteById(id);
             return true;
         } else
             return false;
