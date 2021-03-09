@@ -1,0 +1,1 @@
+CREATE TABLE superheroes (id int NOT NULL AUTO_INCREMENT PRIMARY KEY,nombre varchar(50))
