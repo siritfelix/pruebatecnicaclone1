@@ -1,6 +1,8 @@
 package com.superheroes.pruebatecnica.controllers;
 
+import com.superheroes.pruebatecnica.aspect.Time;
 import com.superheroes.pruebatecnica.dto.SuperHeroeDTO;
+import com.superheroes.pruebatecnica.exceptions.NotFoundException;
 import com.superheroes.pruebatecnica.repository.model.SuperHeroe;
 import com.superheroes.pruebatecnica.services.SuperHeroeService;
 
@@ -29,30 +31,36 @@ public class SuperHeroeController {
     @Autowired
     private SuperHeroeService superHeroeService;
 
+    @Time
     @GetMapping(LISTAR)
+
     public ResponseEntity<?> ListarTodos() {
 
         return new ResponseEntity<>(superHeroeService.ListarTodos(), HttpStatus.OK);
     }
 
+    @Time
     @GetMapping(BUSCAR_POR_ID)
+
     public ResponseEntity<?> BuscarPorID(@PathVariable Integer id) {
 
         if (superHeroeService.BuscarPorId(id).isPresent())
             return new ResponseEntity<>(superHeroeService.BuscarPorId(id).get(), HttpStatus.OK);
         else
-            return new ResponseEntity<>("Superheroe no encontrado", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("SuperHeroe no encontrado");
     }
 
+    @Time
     @GetMapping(BUSCAR_POR_NOMBRE)
     public ResponseEntity<?> BuscarPorNombre(@PathVariable String nombre) {
 
         if (!superHeroeService.ListarPorCoincidenciaTodos(nombre).isEmpty())
             return new ResponseEntity<>(superHeroeService.ListarPorCoincidenciaTodos(nombre), HttpStatus.OK);
         else
-            return new ResponseEntity<>("Superheroe no encontrado", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("SuperHeroe no encontrado");
     }
 
+    @Time
     @PutMapping(MODIFICAR)
     public ResponseEntity<?> Modificar(@RequestBody SuperHeroeDTO superHeroeDTO) {
 
@@ -60,16 +68,17 @@ public class SuperHeroeController {
         if (superHeroeService.Modificar(superHeroe).isPresent())
             return new ResponseEntity<>(superHeroeDTO, HttpStatus.OK);
         else
-            return new ResponseEntity<>("Superheroe no encontrado", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("SuperHeroe no encontrado");
     }
 
+    @Time
     @DeleteMapping(ELIMINAR)
     public ResponseEntity<?> Eliminar(@RequestParam Integer id) {
 
         if (superHeroeService.Eliminar(id))
-            return new ResponseEntity<>("Superheroe Eliminado", HttpStatus.OK);
+            return new ResponseEntity<>("Superheroe", HttpStatus.OK);
         else
-            return new ResponseEntity<>("Superheroe no encontrado", HttpStatus.NOT_FOUND);
+            throw new NotFoundException("SuperHeroe no encontrado");
     }
 
 }

@@ -3,6 +3,7 @@ package com.superheroes.pruebatecnica.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.superheroes.pruebatecnica.aspect.Time;
 import com.superheroes.pruebatecnica.repository.SuperHeroeRepository;
 import com.superheroes.pruebatecnica.repository.model.SuperHeroe;
 
@@ -24,6 +25,7 @@ public class SuperHeroeServiceImple implements SuperHeroeService {
 
     @Override
     public Optional<SuperHeroe> BuscarPorId(Integer id) {
+        
         return superHeroeRepository.findById(id);
     }
 
