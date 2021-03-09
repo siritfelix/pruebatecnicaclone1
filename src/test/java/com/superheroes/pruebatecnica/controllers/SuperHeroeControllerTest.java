@@ -67,22 +67,24 @@ public class SuperHeroeControllerTest {
     public void Exepcion() throws Exception {
 
         when(superHeroeService.ListarTodos()).thenThrow(new InternalError());
-        this.mockMvc.perform(get(URI + LISTAR)).andDo(print()).andExpect(status().isInternalServerError())
+        this.mockMvc.perform(get(URI + LISTAR).header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ==")).andDo(print())
+                .andExpect(status().isInternalServerError())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje", Matchers.is("Error Interno del servidor")));
     }
 
     @Test
     public void ListarTodos() throws Exception {
 
-        this.mockMvc.perform(get(URI + LISTAR)).andDo(print()).andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", Matchers.is(1)))
+        this.mockMvc.perform(get(URI + LISTAR).header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ==")).andDo(print())
+                .andExpect(status().isOk()).andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].nombre", Matchers.is("Superman")));
     }
 
     @Test
     public void BuscarPorID() throws Exception {
 
-        this.mockMvc.perform(get(URI + BUSCAR_POR_ID + "1")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc.perform(get(URI + BUSCAR_POR_ID + "1").header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ=="))
+                .andDo(print()).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nombre", Matchers.is("Superman")));
     }
@@ -90,7 +92,8 @@ public class SuperHeroeControllerTest {
     @Test
     public void BuscarPorIDNot() throws Exception {
 
-        this.mockMvc.perform(get(URI + BUSCAR_POR_ID + 10)).andDo(print()).andExpect(status().isNotFound())
+        this.mockMvc.perform(get(URI + BUSCAR_POR_ID + 10).header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ=="))
+                .andDo(print()).andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje", Matchers.is("SuperHeroe no encontrado")));
 
     }
@@ -98,7 +101,9 @@ public class SuperHeroeControllerTest {
     @Test
     public void BuscarPorNombre() throws Exception {
 
-        this.mockMvc.perform(get(URI + BUSCAR_POR_NOMBRE + "man")).andDo(print()).andExpect(status().isOk())
+        this.mockMvc
+                .perform(get(URI + BUSCAR_POR_NOMBRE + "man").header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ=="))
+                .andDo(print()).andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id", Matchers.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.[0].nombre", Matchers.is("Superman")));
     }
@@ -106,14 +111,17 @@ public class SuperHeroeControllerTest {
     @Test
     public void BuscarPorNombreNot() throws Exception {
 
-        this.mockMvc.perform(get(URI + BUSCAR_POR_NOMBRE + "xxx")).andDo(print()).andExpect(status().isNotFound())
+        this.mockMvc
+                .perform(get(URI + BUSCAR_POR_NOMBRE + "xxx").header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ=="))
+                .andDo(print()).andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje", Matchers.is("SuperHeroe no encontrado")));
     }
 
     @Test
     public void ModificarNot() throws Exception {
 
-        this.mockMvc.perform(put(URI + MODIFICAR)).andDo(print()).andExpect(status().isBadRequest())
+        this.mockMvc.perform(put(URI + MODIFICAR).header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ=="))
+                .andDo(print()).andExpect(status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje", Matchers.is("Error en los parametros")));
 
     }
@@ -122,7 +130,8 @@ public class SuperHeroeControllerTest {
     public void ModificarNotFound() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         this.mockMvc
-                .perform(put(URI + MODIFICAR).content(mapper.writeValueAsString(new SuperHeroe(10, "Superman")))
+                .perform(put(URI + MODIFICAR).header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ==")
+                        .content(mapper.writeValueAsString(new SuperHeroe(10, "Superman")))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print()).andExpect(status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje", Matchers.is("SuperHeroe no encontrado")));
@@ -132,13 +141,17 @@ public class SuperHeroeControllerTest {
     @Test
     public void Eliminar() throws Exception {
 
-        this.mockMvc.perform(delete(URI + ELIMINAR).param("id", "1")).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(
+                delete(URI + ELIMINAR).header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ==").param("id", "1"))
+                .andDo(print()).andExpect(status().isOk());
 
     }
 
     @Test
     public void EliminarNot() throws Exception {
-        this.mockMvc.perform(delete(URI + ELIMINAR).param("id", "10")).andDo(print()).andExpect(status().isNotFound());
+        this.mockMvc.perform(
+                delete(URI + ELIMINAR).header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ==").param("id", "10"))
+                .andDo(print()).andExpect(status().isNotFound());
 
     }
 }
