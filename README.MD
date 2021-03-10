@@ -2,13 +2,11 @@
 
 Reto por Felix Antonio Sirit Murillo siritfelix@gmail.com
 
-
 Tecnologías necesarias
 
 `Java` `Maven` `Spring-Boot` `h2` `flyway` `spring-security` `JPA`
 
 Instalación del proyecto
-
 
 * Importar el proyecto en cualquier ide
 * Compilar ejecutando: mvn clean install
@@ -22,3 +20,4 @@ Instalación del proyecto
 >>
 
 * Documentacion : http://localhost:8080/swagger-ui.html
+* Repositorio : https://github.com/siritfelix/pruebatecnica
