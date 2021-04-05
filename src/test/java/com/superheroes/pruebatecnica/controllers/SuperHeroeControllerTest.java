@@ -66,7 +66,7 @@ public class SuperHeroeControllerTest {
     @Test
     public void Exepcion() throws Exception {
 
-        when(superHeroeService.ListarTodos()).thenThrow(new InternalError());
+        when(superHeroeService.listarTodos()).thenThrow(new InternalError());
         this.mockMvc.perform(get(URI + LISTAR).header("Authorization", "Basic c2lyaXRmZWxpeDoxMjM0NQ==")).andDo(print())
                 .andExpect(status().isInternalServerError())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensaje", Matchers.is("Error Interno del servidor")));

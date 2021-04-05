@@ -3,7 +3,6 @@ package com.superheroes.pruebatecnica.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.superheroes.pruebatecnica.aspect.Time;
 import com.superheroes.pruebatecnica.repository.SuperHeroeRepository;
 import com.superheroes.pruebatecnica.repository.model.SuperHeroe;
 
@@ -17,22 +16,22 @@ public class SuperHeroeServiceImple implements SuperHeroeService {
     private SuperHeroeRepository superHeroeRepository;
 
     @Override
-    public List<SuperHeroe> ListarTodos() {
+    public List<SuperHeroe> listarTodos() {
 
         return superHeroeRepository.findAll();
 
     }
 
     @Override
-    public Optional<SuperHeroe> BuscarPorId(Integer id) {
+    public Optional<SuperHeroe> buscarPorId(Integer id) {
 
         return superHeroeRepository.findById(id);
     }
 
     @Override
-    public Optional<SuperHeroe> Modificar(SuperHeroe superHeroe) {
+    public Optional<SuperHeroe> modificar(SuperHeroe superHeroe) {
 
-        if (BuscarPorId(superHeroe.getId()).isPresent())
+        if (buscarPorId(superHeroe.getId()).isPresent())
             return Optional.of(superHeroeRepository.save(superHeroe));
         else
             return Optional.empty();
@@ -40,8 +39,8 @@ public class SuperHeroeServiceImple implements SuperHeroeService {
     }
 
     @Override
-    public Boolean Eliminar(Integer id) {
-        Optional<SuperHeroe> superHeroe = BuscarPorId(id);
+    public Boolean eliminar(Integer id) {
+        Optional<SuperHeroe> superHeroe = buscarPorId(id);
         if (superHeroe.isPresent()) {
             superHeroeRepository.deleteById(id);
             return true;
@@ -51,7 +50,7 @@ public class SuperHeroeServiceImple implements SuperHeroeService {
     }
 
     @Override
-    public List<SuperHeroe> ListarPorCoincidenciaTodos(String nombre) {
+    public List<SuperHeroe> listarPorCoincidenciaTodos(String nombre) {
         return superHeroeRepository.findByNombreContaining(nombre);
     }
 }

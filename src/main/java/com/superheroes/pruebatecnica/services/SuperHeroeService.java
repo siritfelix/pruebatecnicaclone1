@@ -7,14 +7,14 @@ import com.superheroes.pruebatecnica.repository.model.SuperHeroe;
 
 public interface SuperHeroeService {
 
-    public List<SuperHeroe> ListarTodos();
+    public List<SuperHeroe> listarTodos();
 
-    public Optional<SuperHeroe> BuscarPorId(Integer id);
+    public Optional<SuperHeroe> buscarPorId(Integer id);
 
-    public Optional<SuperHeroe> Modificar(SuperHeroe superHeroe);
+    public Optional<SuperHeroe> modificar(SuperHeroe superHeroe);
 
-    public Boolean Eliminar(Integer id);
+    public Boolean eliminar(Integer id);
 
-    public List<SuperHeroe> ListarPorCoincidenciaTodos(String nombre);
+    public List<SuperHeroe> listarPorCoincidenciaTodos(String nombre);
 
 }

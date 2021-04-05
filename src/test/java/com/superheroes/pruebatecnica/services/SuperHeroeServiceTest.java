@@ -49,19 +49,19 @@ public class SuperHeroeServiceTest {
 
     @Test
     public void ListarTodosTest() {
-        List<SuperHeroe> superHeroes = superHeroeService.ListarTodos();
+        List<SuperHeroe> superHeroes = superHeroeService.listarTodos();
         assertEquals(superHeroes.size(), 4);
     }
 
     @Test
     public void BuscarPorIdTest() {
-        Optional<SuperHeroe> superHeroes = superHeroeService.BuscarPorId(1);
+        Optional<SuperHeroe> superHeroes = superHeroeService.buscarPorId(1);
         assertEquals(superHeroes.get().getNombre(), "Superman");
     }
 
     @Test
     public void BuscarPorIdTestNot() {
-        Optional<SuperHeroe> superHeroes = superHeroeService.BuscarPorId(10);
+        Optional<SuperHeroe> superHeroes = superHeroeService.buscarPorId(10);
         assertEquals(superHeroes.isEmpty(), true);
     }
 
@@ -69,20 +69,20 @@ public class SuperHeroeServiceTest {
     public void ModificarTest() {
         SuperHeroe superHeroe = new SuperHeroe(1, "Supergirls");
         when(superHeroeRepository.save(superHeroe)).thenReturn(superHeroe);
-        Optional<SuperHeroe> superHeroes = superHeroeService.Modificar(superHeroe);
+        Optional<SuperHeroe> superHeroes = superHeroeService.modificar(superHeroe);
         assertEquals(superHeroes.get().getNombre(), "Supergirls");
     }
 
     @Test
     public void EliminarTest() {
 
-        assertEquals(superHeroeService.Eliminar(1), true);
-        assertEquals(superHeroeService.Eliminar(10), false);
+        assertEquals(superHeroeService.eliminar(1), true);
+        assertEquals(superHeroeService.eliminar(10), false);
     }
 
     @Test
     public void ListarPorCoincidenciaTodosTest() {
-        List<SuperHeroe> superHeroes = superHeroeService.ListarPorCoincidenciaTodos("man");
+        List<SuperHeroe> superHeroes = superHeroeService.listarPorCoincidenciaTodos("man");
         assertEquals(superHeroes.size(), 3);
         assertEquals(superHeroes.get(0).getNombre(), "Superman");
     }
